@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Developer Portfolio Builder</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-code"></i>
+                <span>Developer<span class="highlight">Portfolio</span></span>
+            </div>
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="portfolio.html" class="btn-view-portfolio">
+                    <i class="fas fa-eye"></i> View
+                </a>
+                <button class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <aside class="sidebar">
+            <div class="profile-section">
+                <div class="avatar-container">
+                    <img id="profileAvatar" src="https://via.placeholder.com/120/6c63ff/ffffff?text=Developer" alt="Profile" />
+                    <label for="avatarUpload" class="avatar-upload-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display:none" />
+                </div>
+                <h2 contenteditable="true" id="profileName">John Developer</h2>
+                <p contenteditable="true" id="profileTitle">Full Stack Developer</p>
+                <p contenteditable="true" id="profileBio">Passionate about building beautiful web applications</p>
+                <button class="btn-save-profile" id="saveProfileBtn">
+                    <i class="fas fa-save"></i> Save Profile
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3><i class="fas fa-file-alt"></i> Resume Upload</h3>
+                <div class="resume-upload-area" id="resumeUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drop your resume here or click to upload</p>
+                    <span class="file-types">PDF, DOC, DOCX (Max 5MB)</span>
+                    <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" style="display:none" />
+                </div>
+                <div id="resumeStatus" class="resume-status" style="display:none">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="resumeName">resume.pdf</span>
+                    <span id="resumeSize" style="font-size:0.75rem;color:var(--text-muted);"></span>
+                    <button id="removeResume" class="remove-btn"><i class="fas fa-times"></i></button>
+                </div>
+                <div id="resumeUploadProgress" class="upload-progress" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                    <span id="progressText">Uploading...</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3><i class="fas fa-palette"></i> Theme Colors</h3>
+                <div class="color-picker">
+                    <button class="color-option active" data-color="#6c63ff" style="background:#6c63ff"></button>
+                    <button class="color-option" data-color="#ff6b6b" style="background:#ff6b6b"></button>
+                    <button class="color-option" data-color="#4ecdc4" style="background:#4ecdc4"></button>
+                    <button class="color-option" data-color="#f9ca24" style="background:#f9ca24"></button>
+                    <button class="color-option" data-color="#e056a0" style="background:#e056a0"></button>
+                    <button class="color-option" data-color="#2ecc71" style="background:#2ecc71"></button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3><i class="fas fa-download"></i> Export</h3>
+                <button class="btn-export" id="exportDataBtn">
+                    <i class="fas fa-file-export"></i> Export All Data
+                </button>
+                <button class="btn-import" id="importDataBtn">
+                    <i class="fas fa-file-import"></i> Import Data
+                </button>
+                <input type="file" id="importInput" accept=".json" style="display:none" />
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-code"></i> Skills</h2>
+                    <button class="btn-add" id="addSkillBtn"><i class="fas fa-plus"></i> Add Skill</button>
+                </div>
+                <div class="skills-container" id="skillsContainer"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+                    <button class="btn-add" id="addProjectBtn"><i class="fas fa-plus"></i> Add Project</button>
+                </div>
+                <div class="projects-grid" id="projectsContainer"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                    <button class="btn-add" id="addExperienceBtn"><i class="fas fa-plus"></i> Add Experience</button>
+                </div>
+                <div class="experience-list" id="experienceContainer"></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="skillModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="skillModalTitle">Add Skill</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="skillForm">
+                <input type="hidden" id="skillEditId" />
+                <div class="form-group">
+                    <label for="skillName">Skill Name</label>
+                    <input type="text" id="skillName" placeholder="e.g., JavaScript" required />
+                </div>
+                <div class="form-group">
+                    <label for="skillLevel">Proficiency Level</label>
+                    <select id="skillLevel" required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Skill</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="projectModalTitle">Add Project</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="projectForm">
+                <input type="hidden" id="projectEditId" />
+                <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" id="projectName" placeholder="e.g., Portfolio Builder" required />
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Description</label>
+                    <textarea id="projectDescription" placeholder="Describe your project..." rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectTech">Technologies</label>
+                    <input type="text" id="projectTech" placeholder="e.g., React, Node.js" required />
+                </div>
+                <div class="form-group">
+                    <label for="projectLink">Live Demo URL</label>
+                    <input type="url" id="projectLink" placeholder="https://your-project.com" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save Project</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="experienceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="experienceModalTitle">Add Experience</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="experienceForm">
+                <input type="hidden" id="experienceEditId" />
+                <div class="form-group">
+                    <label for="expCompany">Company</label>
+                    <input type="text" id="expCompany" placeholder="e.g., Google" required />
+                </div>
+                <div class="form-group">
+                    <label for="expRole">Role</label>
+                    <input type="text" id="expRole" placeholder="e.g., Senior Developer" required />
+                </div>
+                <div class="form-group">
+                    <label for="expDuration">Duration</label>
+                    <input type="text" id="expDuration" placeholder="e.g., 2020-2023" required />
+                </div>
+                <div class="form-group">
+                    <label for="expDescription">Description</label>
+                    <textarea id="expDescription" placeholder="Describe your role..." rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Experience</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
