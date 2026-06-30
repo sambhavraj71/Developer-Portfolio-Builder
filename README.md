@@ -392,9 +392,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- **GitHub:** [yourusername](https://github.com/yourusername)
-- **LinkedIn:** [Your Name](https://linkedin.com/in/yourname)
-- **Portfolio:** [yourportfolio.com](https://yourportfolio.com)
+- **GitHub:** [yourusername](https://github.com/sambhavraj71)
+- **LinkedIn:** [Your Name](https://linkedin.com/in/sambhavraj)
 
 ---
 
